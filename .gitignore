@@ -28,3 +28,7 @@ dist-ssr
 
 build/*
 node_modules/*
+
+priv/static/app.min.css
+priv/static/app.min.mjs
+priv/static/index.html

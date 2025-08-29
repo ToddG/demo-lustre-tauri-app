@@ -3,10 +3,20 @@
 This example demonstrates the fundamental concepts of the Lustre framework 
 running inside a tauri webview container.
 
-## Running the Example
+## Quickstart
+
+### Run it
 
 ```bash
+cd [this directory]
+npm install
 npm run tauri dev
+```
+
+### Build it
+
+```
+./build.sh
 ```
 
 ## Docs
