@@ -3667,7 +3667,7 @@ function view(model) {
   );
 }
 function main() {
-  debug2("STARTUP LOGGED FROM GLEAM (CURRENTLY BROKEN)");
+  debug2("main app.gleam startup");
   let app = simple(init, update2, view);
   let $ = start3(app, "#app", void 0);
   if (!($ instanceof Ok)) {
@@ -3678,7 +3678,7 @@ function main() {
       16,
       "main",
       "Pattern match failed, no pattern matched the value.",
-      { value: $, start: 517, end: 566, pattern_start: 528, pattern_end: 533 }
+      { value: $, start: 495, end: 544, pattern_start: 506, pattern_end: 511 }
     );
   }
   return void 0;

@@ -1,6 +1,7 @@
 # 01-basics/01-hello-world
 
-This example demonstrates the fundamental concepts of the Lustre framework.
+This example demonstrates the fundamental concepts of the Lustre framework 
+running inside a tauri webview container.
 
 ## The Model-View-Update architecture
 
