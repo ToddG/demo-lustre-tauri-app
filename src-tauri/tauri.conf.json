@@ -3,10 +3,9 @@
   "productName": "foo01",
   "version": "0.1.0",
   "identifier": "com.foo01.app",
-   "build": {
-    "beforeDevCommand": "pnpm vite",
+  "build": {
     "beforeDevCommand": "gleam run -m lustre/dev start",
-    "beforeBuildCommand": "pnpm vite build",
+    "beforeBuildCommand": "gleam run -m lustre/dev build app",
     "devUrl": "http://localhost:1234",
     "frontendDist": "../dist"
   },

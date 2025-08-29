@@ -3626,7 +3626,7 @@ async function debug(message, options) {
   await log2(LogLevel.Debug, message, options);
 }
 
-// build/dev/javascript/app/tauri-plugin-log-shim.ts
+// build/dev/javascript/app/tauri-plugin-log-ffi.ts
 function debug2(msg) {
   debug(msg);
 }

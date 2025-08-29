@@ -4,5 +4,5 @@
 // pub fn debug(msg: String) -> Nil
 
 // Q: this did not work for me either
-@external(javascript, "./tauri-plugin-log-shim.ts", "debug")
+@external(javascript, "./tauri-plugin-log-ffi.ts", "debug")
 pub fn debug(msg: String) -> Nil
