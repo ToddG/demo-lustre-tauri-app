@@ -16,7 +16,7 @@ npm run tauri dev
 ### Build it
 
 ```
-./build.sh
+npm run tauri build
 ```
 
 ## Docs
