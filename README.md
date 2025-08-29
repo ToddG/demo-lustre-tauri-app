@@ -6,7 +6,16 @@ running inside a tauri webview container.
 ## Running the Example
 
 ```bash
+cd [this directory]
+npm install
 npm run tauri dev
+```
+
+
+## To build artifact
+
+```
+gleam run -m lustre/dev build app --minify
 ```
 
 ## Docs
