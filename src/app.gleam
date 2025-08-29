@@ -1,6 +1,7 @@
 // IMPORTS ---------------------------------------------------------------------
 
 import gleam/int
+import logger_ffi
 import lustre
 import lustre/element.{type Element}
 import lustre/element/html
@@ -9,6 +10,8 @@ import lustre/event
 // MAIN ------------------------------------------------------------------------
 
 pub fn main() {
+  // Q: why is this line breaking the app? Commenting it out and the app works again...
+  logger_ffi.debug("STARTUP LOGGED FROM GLEAM (CURRENTLY BROKEN)")
   let app = lustre.simple(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
 
@@ -45,8 +48,14 @@ type Msg {
 ///
 fn update(model: Model, msg: Msg) -> Model {
   case msg {
-    UserClickedIncrement -> model + 1
-    UserClickedDecrement -> model - 1
+    UserClickedIncrement -> {
+      logger_ffi.debug("user clicked increment")
+      model + 1
+    }
+    UserClickedDecrement -> {
+      logger_ffi.debug("user clicked decrement")
+      model - 1
+    }
   }
 }
 

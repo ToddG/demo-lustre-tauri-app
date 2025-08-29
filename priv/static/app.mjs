@@ -90,7 +90,7 @@ var Ok = class extends Result {
     return true;
   }
 };
-var Error = class extends Result {
+var Error2 = class extends Result {
   constructor(detail) {
     super();
     this[0] = detail;
@@ -555,7 +555,7 @@ function run(data, decoder) {
   if (errors instanceof Empty) {
     return new Ok(maybe_invalid_data);
   } else {
-    return new Error(errors);
+    return new Error2(errors);
   }
 }
 function success(data) {
@@ -872,7 +872,7 @@ function get(map4, key) {
   if (value != null) {
     return new Ok(value);
   } else {
-    return new Error(void 0);
+    return new Error2(void 0);
   }
 }
 function has_key2(map4, key) {
@@ -1238,7 +1238,7 @@ function handle(events, path, name, event4) {
     let handler = $[0];
     return [events$1, run(event4, handler)];
   } else {
-    return [events$1, new Error(toList([]))];
+    return [events$1, new Error2(toList([]))];
   }
 }
 function has_dispatched_events(events, path) {
@@ -3387,9 +3387,9 @@ var Spa = class {
   }
 };
 var start = ({ init: init2, update: update3, view: view2 }, selector, flags) => {
-  if (!is_browser()) return new Error(new NotABrowser());
+  if (!is_browser()) return new Error2(new NotABrowser());
   const root3 = selector instanceof HTMLElement ? selector : document().querySelector(selector);
-  if (!root3) return new Error(new ElementNotFound(selector));
+  if (!root3) return new Error2(new ElementNotFound(selector));
   return new Ok(new Spa(root3, init2(flags), update3, view2));
 };
 
@@ -3426,7 +3426,7 @@ function simple(init2, update3, view2) {
 function start3(app, selector, start_args) {
   return guard(
     !is_browser(),
-    new Error(new NotABrowser()),
+    new Error2(new NotABrowser()),
     () => {
       return start(app, selector, start_args);
     }
@@ -3471,6 +3471,166 @@ function on_click(msg) {
   return on("click", success(msg));
 }
 
+// node_modules/@tauri-apps/api/external/tslib/tslib.es6.js
+function __classPrivateFieldGet(receiver, state, kind, f) {
+  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+  if (kind === "m") throw new TypeError("Private method is not writable");
+  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+  return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+}
+
+// node_modules/@tauri-apps/api/core.js
+var _Channel_onmessage;
+var _Channel_nextMessageIndex;
+var _Channel_pendingMessages;
+var _Channel_messageEndIndex;
+var _Resource_rid;
+var SERIALIZE_TO_IPC_FN = "__TAURI_TO_IPC_KEY__";
+function transformCallback(callback, once = false) {
+  return window.__TAURI_INTERNALS__.transformCallback(callback, once);
+}
+var Channel = class {
+  constructor(onmessage) {
+    _Channel_onmessage.set(this, void 0);
+    _Channel_nextMessageIndex.set(this, 0);
+    _Channel_pendingMessages.set(this, []);
+    _Channel_messageEndIndex.set(this, void 0);
+    __classPrivateFieldSet(this, _Channel_onmessage, onmessage || (() => {
+    }), "f");
+    this.id = transformCallback((rawMessage) => {
+      const index2 = rawMessage.index;
+      if ("end" in rawMessage) {
+        if (index2 == __classPrivateFieldGet(this, _Channel_nextMessageIndex, "f")) {
+          this.cleanupCallback();
+        } else {
+          __classPrivateFieldSet(this, _Channel_messageEndIndex, index2, "f");
+        }
+        return;
+      }
+      const message = rawMessage.message;
+      if (index2 == __classPrivateFieldGet(this, _Channel_nextMessageIndex, "f")) {
+        __classPrivateFieldGet(this, _Channel_onmessage, "f").call(this, message);
+        __classPrivateFieldSet(this, _Channel_nextMessageIndex, __classPrivateFieldGet(this, _Channel_nextMessageIndex, "f") + 1, "f");
+        while (__classPrivateFieldGet(this, _Channel_nextMessageIndex, "f") in __classPrivateFieldGet(this, _Channel_pendingMessages, "f")) {
+          const message2 = __classPrivateFieldGet(this, _Channel_pendingMessages, "f")[__classPrivateFieldGet(this, _Channel_nextMessageIndex, "f")];
+          __classPrivateFieldGet(this, _Channel_onmessage, "f").call(this, message2);
+          delete __classPrivateFieldGet(this, _Channel_pendingMessages, "f")[__classPrivateFieldGet(this, _Channel_nextMessageIndex, "f")];
+          __classPrivateFieldSet(this, _Channel_nextMessageIndex, __classPrivateFieldGet(this, _Channel_nextMessageIndex, "f") + 1, "f");
+        }
+        if (__classPrivateFieldGet(this, _Channel_nextMessageIndex, "f") === __classPrivateFieldGet(this, _Channel_messageEndIndex, "f")) {
+          this.cleanupCallback();
+        }
+      } else {
+        __classPrivateFieldGet(this, _Channel_pendingMessages, "f")[index2] = message;
+      }
+    });
+  }
+  cleanupCallback() {
+    window.__TAURI_INTERNALS__.unregisterCallback(this.id);
+  }
+  set onmessage(handler) {
+    __classPrivateFieldSet(this, _Channel_onmessage, handler, "f");
+  }
+  get onmessage() {
+    return __classPrivateFieldGet(this, _Channel_onmessage, "f");
+  }
+  [(_Channel_onmessage = /* @__PURE__ */ new WeakMap(), _Channel_nextMessageIndex = /* @__PURE__ */ new WeakMap(), _Channel_pendingMessages = /* @__PURE__ */ new WeakMap(), _Channel_messageEndIndex = /* @__PURE__ */ new WeakMap(), SERIALIZE_TO_IPC_FN)]() {
+    return `__CHANNEL__:${this.id}`;
+  }
+  toJSON() {
+    return this[SERIALIZE_TO_IPC_FN]();
+  }
+};
+async function invoke(cmd, args = {}, options) {
+  return window.__TAURI_INTERNALS__.invoke(cmd, args, options);
+}
+_Resource_rid = /* @__PURE__ */ new WeakMap();
+
+// node_modules/@tauri-apps/api/event.js
+var TauriEvent;
+(function(TauriEvent2) {
+  TauriEvent2["WINDOW_RESIZED"] = "tauri://resize";
+  TauriEvent2["WINDOW_MOVED"] = "tauri://move";
+  TauriEvent2["WINDOW_CLOSE_REQUESTED"] = "tauri://close-requested";
+  TauriEvent2["WINDOW_DESTROYED"] = "tauri://destroyed";
+  TauriEvent2["WINDOW_FOCUS"] = "tauri://focus";
+  TauriEvent2["WINDOW_BLUR"] = "tauri://blur";
+  TauriEvent2["WINDOW_SCALE_FACTOR_CHANGED"] = "tauri://scale-change";
+  TauriEvent2["WINDOW_THEME_CHANGED"] = "tauri://theme-changed";
+  TauriEvent2["WINDOW_CREATED"] = "tauri://window-created";
+  TauriEvent2["WEBVIEW_CREATED"] = "tauri://webview-created";
+  TauriEvent2["DRAG_ENTER"] = "tauri://drag-enter";
+  TauriEvent2["DRAG_OVER"] = "tauri://drag-over";
+  TauriEvent2["DRAG_DROP"] = "tauri://drag-drop";
+  TauriEvent2["DRAG_LEAVE"] = "tauri://drag-leave";
+})(TauriEvent || (TauriEvent = {}));
+
+// node_modules/@tauri-apps/plugin-log/dist-js/index.js
+var LogLevel;
+(function(LogLevel2) {
+  LogLevel2[LogLevel2["Trace"] = 1] = "Trace";
+  LogLevel2[LogLevel2["Debug"] = 2] = "Debug";
+  LogLevel2[LogLevel2["Info"] = 3] = "Info";
+  LogLevel2[LogLevel2["Warn"] = 4] = "Warn";
+  LogLevel2[LogLevel2["Error"] = 5] = "Error";
+})(LogLevel || (LogLevel = {}));
+function getCallerLocation(stack) {
+  if (!stack) {
+    return;
+  }
+  if (stack.startsWith("Error")) {
+    const lines = stack.split("\n");
+    const callerLine = lines[3]?.trim();
+    if (!callerLine) {
+      return;
+    }
+    const regex = /at\s+(?<functionName>.*?)\s+\((?<fileName>.*?):(?<lineNumber>\d+):(?<columnNumber>\d+)\)/;
+    const match = callerLine.match(regex);
+    if (match) {
+      const { functionName, fileName, lineNumber, columnNumber } = match.groups;
+      return `${functionName}@${fileName}:${lineNumber}:${columnNumber}`;
+    } else {
+      const regexNoFunction = /at\s+(?<fileName>.*?):(?<lineNumber>\d+):(?<columnNumber>\d+)/;
+      const matchNoFunction = callerLine.match(regexNoFunction);
+      if (matchNoFunction) {
+        const { fileName, lineNumber, columnNumber } = matchNoFunction.groups;
+        return `<anonymous>@${fileName}:${lineNumber}:${columnNumber}`;
+      }
+    }
+  } else {
+    const traces = stack.split("\n").map((line) => line.split("@"));
+    const filtered = traces.filter(([name, location]) => {
+      return name.length > 0 && location !== "[native code]";
+    });
+    return filtered[2]?.filter((v) => v.length > 0).join("@");
+  }
+}
+async function log2(level, message, options) {
+  const location = getCallerLocation(new Error().stack);
+  const { file, line, keyValues } = options ?? {};
+  await invoke("plugin:log|log", {
+    level,
+    message,
+    location,
+    file,
+    line,
+    keyValues
+  });
+}
+async function debug(message, options) {
+  await log2(LogLevel.Debug, message, options);
+}
+
+// build/dev/javascript/app/tauri-plugin-log-shim.ts
+function debug2(msg) {
+  debug(msg);
+}
+
 // build/dev/javascript/app/app.mjs
 var FILEPATH = "src/app.gleam";
 var UserClickedIncrement = class extends CustomType {
@@ -3482,8 +3642,10 @@ function init(_) {
 }
 function update2(model, msg) {
   if (msg instanceof UserClickedIncrement) {
+    debug2("user clicked increment");
     return model + 1;
   } else {
+    debug2("user clicked decrement");
     return model - 1;
   }
 }
@@ -3505,6 +3667,7 @@ function view(model) {
   );
 }
 function main() {
+  debug2("STARTUP LOGGED FROM GLEAM (CURRENTLY BROKEN)");
   let app = simple(init, update2, view);
   let $ = start3(app, "#app", void 0);
   if (!($ instanceof Ok)) {
@@ -3512,10 +3675,10 @@ function main() {
       "let_assert",
       FILEPATH,
       "app",
-      13,
+      16,
       "main",
       "Pattern match failed, no pattern matched the value.",
-      { value: $, start: 344, end: 393, pattern_start: 355, pattern_end: 360 }
+      { value: $, start: 517, end: 566, pattern_start: 528, pattern_end: 533 }
     );
   }
   return void 0;
