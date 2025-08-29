@@ -11,7 +11,7 @@ import lustre/event
 
 pub fn main() {
   // Q: why is this line breaking the app? Commenting it out and the app works again...
-  logger_ffi.debug("STARTUP LOGGED FROM GLEAM (CURRENTLY BROKEN)")
+  logger_ffi.debug("main app.gleam startup")
   let app = lustre.simple(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
 
