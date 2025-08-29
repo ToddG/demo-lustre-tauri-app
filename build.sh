@@ -1,3 +1,5 @@
+#!/bin/bash
+
 gleam run -m lustre/dev build app --minify
 
 cp ./index.html ./priv/static/index.html

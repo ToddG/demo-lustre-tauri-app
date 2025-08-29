@@ -5,7 +5,7 @@
   "identifier": "com.foo01.app",
   "build": {
     "beforeDevCommand": "gleam run -m lustre/dev start",
-    "beforeBuildCommand": "gleam run -m lustre/dev build app",
+    "beforeBuildCommand": "./build.sh",
     "devUrl": "http://localhost:1234",
     "frontendDist": "../dist"
   },
