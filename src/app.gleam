@@ -3,18 +3,19 @@
 import gleam/int
 import logger_ffi
 import lustre
+import lustre/attribute
 import lustre/element.{type Element}
 import lustre/element/html
 import lustre/event
 
+// import maplibre_gl_js_ffi
+
 // MAIN ------------------------------------------------------------------------
 
 pub fn main() {
-  // Q: why is this line breaking the app? Commenting it out and the app works again...
-  logger_ffi.debug("main app.gleam startup")
+  logger_ffi.info("main app.gleam startup")
   let app = lustre.simple(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
-
   Nil
 }
 
@@ -67,9 +68,34 @@ fn update(model: Model, msg: Msg) -> Model {
 fn view(model: Model) -> Element(Msg) {
   let count = int.to_string(model)
 
-  html.div([], [
-    html.button([event.on_click(UserClickedDecrement)], [html.text("-")]),
-    html.p([], [html.text("Count: "), html.text(count)]),
-    html.button([event.on_click(UserClickedIncrement)], [html.text("+")]),
+  let style_page =
+    "bg-white dark:bg-gray-800 h-screen flex flex-col justify-center items-center"
+  let style_button =
+    "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+
+  let html_div =
+    html.div(
+      [
+        attribute.class(style_page),
+      ],
+      [
+        view_button(UserClickedDecrement, "(-) decrement", style_button),
+        html.p([], [html.text("Count: "), html.text(count)]),
+        view_button(UserClickedIncrement, "(+) increment", style_button),
+      ],
+    )
+  // let map_style = "width: 400px; height: 300px;"
+  // html.div([attribute.class(map_style), attribute.id("map")], []),
+  // maplibre_gl_js_ffi.new_map("map")
+  html_div
+}
+
+fn view_button(
+  on_click handle_click: msg,
+  label text: String,
+  attribute style: String,
+) -> Element(msg) {
+  html.button([event.on_click(handle_click), attribute.class(style)], [
+    html.text(text),
   ])
 }

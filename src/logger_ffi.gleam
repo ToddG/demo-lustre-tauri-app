@@ -1,8 +1,14 @@
-// Q: is it possible to directly import from tauri? Doesn't work for me but could
-// be that other errors are masking this...
-// @external(javascript, "../src-tauri/@tauri-apps/plugin-log", "debug")
-// pub fn debug(msg: String) -> Nil
-
-// Q: this did not work for me either
-@external(javascript, "./tauri-plugin-log-ffi.ts", "debug")
+@external(javascript, "./tauri_plugin_log_ffi.ts", "debug")
 pub fn debug(msg: String) -> Nil
+
+@external(javascript, "./tauri-plugin-log-ffi.ts", "error")
+pub fn error(msg: String) -> Nil
+
+@external(javascript, "./tauri-plugin-log-ffi.ts", "info")
+pub fn info(msg: String) -> Nil
+
+@external(javascript, "./tauri-plugin-log-ffi.ts", "trace")
+pub fn trace(msg: String) -> Nil
+
+@external(javascript, "./tauri-plugin-log-ffi.ts", "warn")
+pub fn warn(msg: String) -> Nil
