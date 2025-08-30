@@ -21,6 +21,7 @@ npm run tauri build
 
 ## Docs
 
+* https://www.npmjs.com/package/maplibre-gl
 * https://hexdocs.pm/lustre/guide/01-quickstart.html
 * https://tauri.app/start/create-project/
 * https://tauri.app/plugin/logging/
