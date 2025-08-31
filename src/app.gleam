@@ -68,9 +68,11 @@ fn update(model: Model, msg: update_messages.Msg) -> #(Model, Effect(msg)) {
       #(Model(..model, counter: model.counter - 1), effect.none())
     }
     update_messages.UserClickedShowLeafletMap -> {
+      logger_ffi.debug("user clicked show leaflet map")
       #(Model(..model, map_choice: Leaflet), effect.none())
     }
     update_messages.UserClickedShowMapLibreMap -> {
+      logger_ffi.debug("user clicked show maplibre map")
       #(Model(..model, map_choice: MapLibre), effect.none())
     }
   }
