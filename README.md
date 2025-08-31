@@ -1,6 +1,6 @@
 # 01-basics/01-hello-world
 
-This example demonstrates the fundamental concepts of the Lustre framework 
+This example demonstrates the fundamental concepts of the Lustre framework
 running inside a tauri webview container.
 
 ## Quickstart
@@ -27,6 +27,7 @@ npm run tauri build
 * https://tauri.app/plugin/logging/
 * https://www.jonashietala.se/blog/2024/01/11/exploring_the_gleam_ffi/
 * https://discordapp.com/channels/768594524158427167/1410350604085362771/1411004915329007667
+* https://tailgrids.com/blog/component-styling-and-building-components
 
 Note: not currently using vite-gleam (only b/c I don't understand it yet)
 * https://erikarow.land/notes/gleam-vite

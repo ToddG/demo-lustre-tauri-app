@@ -76,8 +76,7 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(msg)) {
 fn view(model: Model) -> Element(Msg) {
   let count = int.to_string(model)
 
-  let page_class =
-    "bg-white dark:bg-gray-800 h-screen flex flex-col justify-center items-center"
+  let page_class = "bg-white dark:bg-gray-800 text-white py-4"
   let button_class =
     "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 
@@ -92,24 +91,60 @@ fn view(model: Model) -> Element(Msg) {
       "",
     )
 
-  let html_div =
-    html.div(
-      [
-        attribute.class(page_class),
-      ],
-      [
-        view_button(UserClickedDecrement, "(-) decrement", button_class),
-        html.p([], [html.text("Count: "), html.text(count)]),
-        view_button(UserClickedIncrement, "(+) increment", button_class),
-        keyed.div(
-          [attribute.class("h-screen flex justify-center items-center")],
-          [
-            #("map", map_container),
-          ],
+  let app_div =
+    html.nav([attribute.class("bg-purple-700 text-white py-4")], [
+      html.div(
+        [attribute.class("container mx-auto flex items-center justify-between")],
+        [
+          html.div([attribute.class("flex items-center")], [
+            html.img([
+              attribute.class("rounded-full h-12 w-12 mr-2"),
+              attribute.src(
+                "https://cdn.pixabay.com/photo/2014/04/02/17/07/user-307993_1280.png",
+              ),
+              attribute.alt("profile image"),
+            ]),
+            html.h1([attribute.class("text-2xl font-bold")], [
+              html.text("FOOBAR!!!"),
+            ]),
+          ]),
+          html.ul([attribute.class("flex space-x-8")], [
+            html.li([], [
+              view_button(UserClickedDecrement, "(-) decrement", button_class),
+            ]),
+            html.li([], [html.p([], [html.text("Count: "), html.text(count)])]),
+            html.li([], [
+              view_button(UserClickedIncrement, "(+) increment", button_class),
+            ]),
+          ]),
+        ],
+      ),
+      html.div([attribute.class(page_class <> "grid grid-cols-3 gap-4")], [
+        html.div(
+          [attribute.class("grid grid-cols-1")],
+          buttons(button_class, count),
         ),
-      ],
-    )
-  html_div
+        html.div([attribute.class("grid grid-cols-1")], [
+          maplibre_map(map_container),
+        ]),
+        html.div([], []),
+      ]),
+    ])
+  app_div
+}
+
+fn buttons(button_class: String, count: String) {
+  [
+    view_button(UserClickedDecrement, "(-) decrement", button_class),
+    html.p([], [html.text("Count: "), html.text(count)]),
+    view_button(UserClickedIncrement, "(+) increment", button_class),
+  ]
+}
+
+fn maplibre_map(map_container: Element(msg)) {
+  keyed.div([attribute.class("h-screen flex justify-center items-center")], [
+    #("map", map_container),
+  ])
 }
 
 fn view_button(
