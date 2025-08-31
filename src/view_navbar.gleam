@@ -117,31 +117,28 @@ import lustre/element/html
 import update_messages
 import view_button
 
-// TODO : use ideas from above html snippet in navbar below
-//
 pub fn navbar() {
-  html.div([], [
-    html.nav([attribute.class("bg-purple-700 text-white py-4")], [
-      html.div([attribute.class("col-span-1")], [
+  html.div([attribute.class("bg-green-900 col-span-3")], [
+    html.nav(
+      [
+        attribute.class("relative -mx-4 flex items-center justify-between"),
+      ],
+      [
+        html.div([attribute.class("w-60 max-w-full px-4")], [
+          html.img([
+            attribute.class("rounded-full h-12 w-12 mr-2"),
+            attribute.src(
+              "https://cdn.pixabay.com/photo/2014/04/02/17/07/user-307993_1280.png",
+            ),
+            attribute.alt("profile image"),
+          ]),
+          html.h1([attribute.class("text-2xl font-bold")], [
+            html.text("FOOBAR!!!"),
+          ]),
+        ]),
         html.div(
+          [attribute.class("flex w-full items-center justify-between px-4")],
           [
-            // attribute.class(
-          //   "container mx-auto flex items-center justify-between",
-          // ),
-          ],
-          [
-            html.div([attribute.class("flex items-center")], [
-              html.img([
-                attribute.class("rounded-full h-12 w-12 mr-2"),
-                attribute.src(
-                  "https://cdn.pixabay.com/photo/2014/04/02/17/07/user-307993_1280.png",
-                ),
-                attribute.alt("profile image"),
-              ]),
-              html.h1([attribute.class("text-2xl font-bold")], [
-                html.text("FOOBAR!!!"),
-              ]),
-            ]),
             html.ul([attribute.class("flex space-x-8")], [
               html.li([], [
                 view_button.button(
@@ -160,7 +157,7 @@ pub fn navbar() {
             ]),
           ],
         ),
-      ]),
-    ]),
+      ],
+    ),
   ])
 }

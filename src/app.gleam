@@ -89,12 +89,19 @@ fn view(model: Model) -> Element(update_messages.Msg) {
     MapLibre -> #("visible", "collapse")
   }
 
-  html.nav([attribute.class("bg-purple-700 text-white py-4")], [
-    html.div([attribute.class("grid grid-flow-col grid-rows-4 gap-1")], [
-      view_navbar.navbar(),
-      view_widget.widget(view_button.default_class(), count),
-      view_map.map(maplibre_visibility, leaflet_visibility),
-      view_footer.footer(),
-    ]),
-  ])
+  html.div(
+    [
+      attribute.class(
+        "flex w-full items-center bg-white dark:bg-dark text-white py-4",
+      ),
+    ],
+    [
+      html.div([attribute.class("grid grid-cols-3 gap-1")], [
+        view_navbar.navbar(),
+        view_widget.widget(view_button.default_class(), count),
+        view_map.map(maplibre_visibility, leaflet_visibility),
+        view_footer.footer(),
+      ]),
+    ],
+  )
 }
