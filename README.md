@@ -29,6 +29,8 @@ npm run tauri build
 * https://discordapp.com/channels/768594524158427167/1410350604085362771/1411004915329007667
 * https://tailgrids.com/blog/component-styling-and-building-components
 * https://openclipart.org/artist/roboxel
+* https://docs.maptiler.com/leaflet/examples/npm-get-started/
+
 
 Note: not currently using vite-gleam (only b/c I don't understand it yet)
 * https://erikarow.land/notes/gleam-vite

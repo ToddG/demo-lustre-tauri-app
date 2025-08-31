@@ -1,6 +1,7 @@
 // IMPORTS ---------------------------------------------------------------------
 
 import gleam/int
+import leaflet_ffi
 import logger_ffi
 import lustre
 import lustre/attribute
@@ -48,6 +49,7 @@ fn init(_) {
 fn setup_maps() {
   use _, _ <- effect.before_paint
   maplibre_gl_js_ffi.new_map("maplibre")
+  leaflet_ffi.new_map("mapleaflet")
   Nil
 }
 
@@ -102,6 +104,7 @@ fn view(model: Model) -> Element(update_messages.Msg) {
         view_navbar.navbar(),
         view_widget.widget(view_button.default_class(), count),
         view_map.map(maplibre_visibility, leaflet_visibility),
+        html.div([attribute.class("col-span-1")], []),
         view_footer.footer(),
       ]),
     ],
