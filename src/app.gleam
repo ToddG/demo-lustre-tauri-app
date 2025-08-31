@@ -7,8 +7,7 @@ import lustre/attribute
 import lustre/element.{type Element}
 import lustre/element/html
 import lustre/event
-
-// import maplibre_gl_js_ffi
+import maplibre_gl_js_ffi
 
 // MAIN ------------------------------------------------------------------------
 
@@ -72,6 +71,7 @@ fn view(model: Model) -> Element(Msg) {
     "bg-white dark:bg-gray-800 h-screen flex flex-col justify-center items-center"
   let style_button =
     "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+  let map_style = "width: 400px; height: 300px;"
 
   let html_div =
     html.div(
@@ -82,11 +82,10 @@ fn view(model: Model) -> Element(Msg) {
         view_button(UserClickedDecrement, "(-) decrement", style_button),
         html.p([], [html.text("Count: "), html.text(count)]),
         view_button(UserClickedIncrement, "(+) increment", style_button),
+        html.div([attribute.class(map_style), attribute.id("map")], []),
       ],
     )
-  // let map_style = "width: 400px; height: 300px;"
-  // html.div([attribute.class(map_style), attribute.id("map")], []),
-  // maplibre_gl_js_ffi.new_map("map")
+  let _map = maplibre_gl_js_ffi.new_map("map")
   html_div
 }
 
